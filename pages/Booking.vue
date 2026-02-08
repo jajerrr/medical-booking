@@ -1,9 +1,8 @@
-
 <template>
- <Home/>
+ <Book/>
 </template>
 
 <script setup lang="ts">
-import Home from '../components/home.vue';
+import Book from '../components/booking.vue';
 
 </script>
