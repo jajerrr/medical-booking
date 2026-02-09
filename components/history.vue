@@ -41,7 +41,7 @@
               <!-- Booking ID -->
               <td class="p-3 block md:table-cell">
                 <span class="font-semibold md:hidden">Booking ID: </span>
-                {{ booking.id }}
+                {{ booking.booking_no }}
               </td>
 
               <!-- Name -->
@@ -59,13 +59,13 @@
               <!-- Date -->
               <td class="p-3 block md:table-cell">
                 <span class="font-semibold md:hidden">Date: </span>
-                {{ booking.date }}
+                {{ booking.appointment_date.split('T')[0] }}
               </td>
 
               <!-- Time -->
               <td class="p-3 block md:table-cell">
                 <span class="font-semibold md:hidden">Time: </span>
-                {{ booking.time }}
+                {{ booking.appointment_time }}
               </td>
 
               <!-- Phone -->

@@ -81,7 +81,13 @@
 
                     <div>
                         <label class="block mb-1 font-medium">SELECT TIME</label>
-                        <input type="time" class="w-full p-2 border rounded" v-model="time" />
+                        <select v-model="time" class="w-full p-2 border rounded">
+                            <option value="">SELECT TIME</option>
+                            <option v-for="t in timeSlots" :key="t" :value="t">
+                                {{ t }}
+                            </option>
+                        </select>
+
                         <p v-if="errors.time" class="text-red-600 text-sm mt-1">
                             {{ errors.time }} </p>
                     </div>
@@ -111,7 +117,6 @@ import Navbar from './navbar.vue'
 
 const router = useRouter()
 
-// form state
 const name = ref('')
 const surname = ref('')
 const birthDate = ref('')
@@ -123,7 +128,6 @@ const time = ref('')
 const medicalConcern = ref('')
 const errors = ref<Record<string, string>>({})
 
-// form validation
 const validateForm = () => {
     errors.value = {}
 
@@ -145,29 +149,81 @@ const validateForm = () => {
 
 
 
+// const submitBooking = () => {
+//     if (!validateForm()) return
 
-// submit function
-const submitBooking = () => {
+//     const booking = {
+//         id: Date.now(),
+//         name: name.value,
+//         surname: surname.value,
+//         birthDate: birthDate.value,
+//         gender: gender.value,
+//         specialty: specialty.value,
+//         phone: phone.value,
+//         date: date.value,
+//         time: time.value,
+//         medicalConcern: medicalConcern.value
+//     }
+
+//     const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
+//     bookings.push(booking)
+//     localStorage.setItem('bookings', JSON.stringify(bookings))
+
+//     console.log(bookings);
+
+//     router.push(`/success?bookingId=${booking.id}`)
+// }
+
+
+
+const submitBooking = async () => {
     if (!validateForm()) return
 
-    const booking = {
-        id: Date.now(),
+    const bookingPayload = {
         name: name.value,
         surname: surname.value,
-        birthDate: birthDate.value,
+        birth_date: birthDate.value,
         gender: gender.value,
         specialty: specialty.value,
         phone: phone.value,
-        date: date.value,
-        time: time.value,
-        medicalConcern: medicalConcern.value
+        appointment_date: date.value,
+        appointment_time: time.value,
+        medical_concern: medicalConcern.value
     }
 
-    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
-    bookings.push(booking)
-    localStorage.setItem('bookings', JSON.stringify(bookings))
+    try {
+        // 👉 ส่งเข้า PostgreSQL ผ่าน Nuxt Server API
+        const result = await $fetch('/api/appointments', {
+            method: 'POST',
+            body: bookingPayload
+        })
 
-    router.push(`/success?bookingId=${booking.id}`)
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
+        bookings.push(result)
+        localStorage.setItem('bookings', JSON.stringify(bookings))
+
+        // router.push(`/success?bookingId=${result.id}`)
+        router.push(`/success?bookingNo=${result.booking_no}`)
+    } catch (err) {
+        console.error(err)
+        alert('Booking failed. Please try again.')
+    }
 }
+
+
+const timeSlots = [
+    '09:00', '09:30',
+    '10:00', '10:30',
+    '11:00', '11:30',
+    '12:00', '12:30',
+    '13:00', '13:30',
+    '14:00', '14:30',
+    '15:00', '15:30',
+    '16:00', '16:30',
+    '17:00'
+]
+
+
+
 
 </script>

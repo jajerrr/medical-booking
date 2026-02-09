@@ -25,11 +25,13 @@
 const route = useRoute()
 const bookingId = route.query.bookingId
 </script> -->
+
+
+
 <template>
   <div class="bg-[#FFFBED] min-h-screen">
     <Navbar class="fixed top-0 left-0 right-0 z-50" />
 
-    <!-- container กลางจอ -->
     <div class="min-h-screen flex items-center justify-center pt-20 px-4">
       <div class="bg-white  rounded-xl shadow p-8 w-full max-w-md text-center">
         
@@ -41,7 +43,7 @@ const bookingId = route.query.bookingId
         </h1>
           <p class="mb-2">
             <strong>Booking ID:</strong>
-            {{ latestBooking.id }}
+            {{ latestBooking.booking_no }}
           </p>
 
           <p class="mb-2">
@@ -56,12 +58,12 @@ const bookingId = route.query.bookingId
 
           <p class="mb-2">
             <strong>Date:</strong>
-            {{ latestBooking.date }}
+            {{ latestBooking.appointment_date.split('T')[0] }}
           </p>
 
           <p class="mb-4">
             <strong>Time:</strong>
-            {{ latestBooking.time }}
+            {{ latestBooking.appointment_time }}
           </p>
         </div>
 
