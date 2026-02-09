@@ -1,5 +1,5 @@
 <template>
-<nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0  border-b border-gray-700">
+<nav class="bg-transparent fixed w-full z-20 top-0 start-0  border-b border-gray-700">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
     <a  a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <span class="self-center text-xl text-heading font-semibold whitespace-nowrap text-green-800">Medical Booking</span>
