@@ -1,27 +1,110 @@
 <template>
-<nav class="bg-transparent fixed w-full z-20 top-0 start-0  border-b border-gray-700">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
-    <a  a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <span class="self-center text-xl text-heading font-semibold whitespace-nowrap text-green-800">Medical Booking</span>
-    </a>
-   
-    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-      <ul class="text-gray-700 font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+  <nav class="bg-white fixed w-full z-50 top-0 shadow-sm">
+    <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+
+      <NuxtLink to="/" class="text-xl font-semibold text-green-800">
+        Medical Booking
+      </NuxtLink>
+
+      <button
+        @click="isOpen = !isOpen"
+        class="md:hidden text-gray-700 focus:outline-none"
+      >
+        <svg
+          v-if="!isOpen"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Desktop -->
+      <ul class="hidden md:flex space-x-8 font-medium text-gray-700">
         <li>
-          <a href="/" class="block py-2 px-3 text-heading bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0 hover:text-green-800" aria-current="page">Home</a>
+          <NuxtLink to="/" class="hover:text-green-800 transition">
+            Home
+          </NuxtLink>
         </li>
         <li>
-          <a href="/booking" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent hover:text-green-800">Appointments</a>
+          <NuxtLink to="/appointments" class="hover:text-green-800 transition">
+            Appointments
+          </NuxtLink>
         </li>
         <li>
-          <a href="/success" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent hover:text-green-800">My Booking</a>
+          <NuxtLink to="/mybooking" class="hover:text-green-800 transition">
+            My Booking
+          </NuxtLink>
         </li>
         <li>
-          <a href="/history" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent hover:text-green-800">History</a>
+          <NuxtLink to="/history" class="hover:text-green-800 transition">
+            History
+          </NuxtLink>
         </li>
-        
       </ul>
     </div>
-  </div>
-</nav>
+
+    <!-- Mobile -->
+    <transition name="fade">
+      <div
+        v-if="isOpen"
+        class="md:hidden bg-white border-t shadow-sm"
+      >
+        <ul class="flex flex-col space-y-3 p-4 text-gray-700 font-medium">
+          <li>
+            <NuxtLink @click="closeMenu" to="/"  class="block py-2 px-3 rounded-lg hover:bg-green-50 hover:text-green-800 transition">Home</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink @click="closeMenu" to="/appointments"  class="block py-2 px-3 rounded-lg hover:bg-green-50 hover:text-green-800 transition">Appointments</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink @click="closeMenu" to="/mybooking"  class="block py-2 px-3 rounded-lg hover:bg-green-50 hover:text-green-800 transition">My Booking</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink @click="closeMenu" to="/history"  class="block py-2 px-3 rounded-lg hover:bg-green-50 hover:text-green-800 transition">History</NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </transition>
+  </nav>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const isOpen = ref(false)
+
+const closeMenu = () => {
+  isOpen.value = false
+}
+</script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-5px);
+}
+</style>

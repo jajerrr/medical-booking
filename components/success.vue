@@ -1,86 +1,90 @@
-<!-- <template>
-
-  <div class="bg-[#FFFBED] min-h-screen ">
-    <Navbar class="fixed top-0 left-0 right-0 z-50 relative" />
-
-  
-    <div class="flex flex-col items-center justify-center p-4 mt-[5%]">
-    <h1 class="text-3xl font-bold text-green-800 mb-4">
-      Booking Confirmed
-    </h1>
-
-    <p class="text-xl mb-4  text-center">
-      Your Booking ID:{{ bookingId }}
-     
-    </p>
-    <NuxtLink to="/" class=" text-center text-green-800 underline  inline-block">
-                        < BACK HOME </NuxtLink>
- 
-  </div>
-   
-  </div>
-</template>
-
-<script setup>
-const route = useRoute()
-const bookingId = route.query.bookingId
-</script> -->
-
-
-
 <template>
   <div class="bg-[#FFFBED] min-h-screen">
     <Navbar class="fixed top-0 left-0 right-0 z-50" />
 
-    <div class="min-h-screen flex items-center justify-center pt-20 px-4">
-      <div class="bg-white  rounded-xl shadow p-8 w-full max-w-md text-center">
-        
-      
+    <div class="min-h-screen flex items-center justify-center pt-24 px-4">
+      <div
+        class="w-full max-w-lg bg-white rounded-2xl shadow-xl
+               p-10 text-center"
+      >
 
-        <div v-if="latestBooking">  
-        <h1 class="text-2xl font-bold text-green-800 mb-4">
-          Booking Confirmed ✅
-        </h1>
-          <p class="mb-2">
-            <strong>Booking ID:</strong>
-            {{ latestBooking.booking_no }}
-          </p>
-
-          <p class="mb-2">
-            <strong>Name:</strong>
-            {{ latestBooking.name }} {{ latestBooking.surname }}
-          </p>
-
-          <p class="mb-2">
-            <strong>Specialty:</strong>
-            {{ latestBooking.specialty }}
-          </p>
-
-          <p class="mb-2">
-            <strong>Date:</strong>
-            {{ latestBooking.appointment_date.split('T')[0] }}
-          </p>
-
-          <p class="mb-4">
-            <strong>Time:</strong>
-            {{ latestBooking.appointment_time }}
-          </p>
+        <div class="flex justify-center mb-6">
+          <div
+            class="w-16 h-16 rounded-full bg-green-100
+                   flex items-center justify-center
+                   text-green-700 text-3xl"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+            class="lucide lucide-badge-check-icon lucide-badge-check">
+            <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
         </div>
 
-        <p v-else class="text-gray-500">
-          No booking data found.
+        <h1 class="text-2xl md:text-3xl font-bold text-green-800 mb-2">
+          BOOKING SUCCESSFUL!
+        </h1>
+
+        <p class="text-gray-500 mb-6">
+          Your appointment has been successfully scheduled.
         </p>
+
+        <div
+          v-if="latestBooking"
+          class="bg-gray-50 rounded-xl p-6 text-left space-y-3"
+        >
+          <div class="flex justify-between">
+            <span class="text-gray-500">Booking ID</span>
+            <span class="font-semibold">
+              {{ latestBooking.booking_no }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-500">Patient</span>
+            <span class="font-semibold">
+              {{ latestBooking.name }} {{ latestBooking.surname }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-500">Specialty</span>
+            <span class="font-semibold">
+              {{ latestBooking.specialty }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-500">Date</span>
+            <span class="font-semibold">
+              {{ new Date(latestBooking.appointment_date).toLocaleDateString('en-CA') }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-500">Time</span>
+            <span class="font-semibold">
+              {{ latestBooking.appointment_time }}
+            </span>
+          </div>
+        </div>
+
+        <div v-else class="text-gray-400">
+          No booking data found.
+        </div>
 
         <NuxtLink
           to="/"
-          class="inline-block mt-4 text-green-800 underline"
+          class="mt-8 inline-block w-full py-3
+                 bg-green-800 text-white rounded-full
+                 hover:bg-green-700 transition"
         >
-          < BACK TO HOME
+           BACK TO HOME
         </NuxtLink>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
@@ -95,5 +99,10 @@ onMounted(() => {
   if (bookings.length > 0) {
     latestBooking.value = bookings[bookings.length - 1]
   }
+
+  console.log(latestBooking.value)
 })
+
+
+
 </script>

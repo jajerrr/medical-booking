@@ -1,119 +1,338 @@
 <template>
     <div class="bg-[#FFFBED] min-h-screen">
         <Navbar class="fixed top-0 left-0 right-0 z-50 relative" />
-
-        <div class="flex  items-center justify-center mt-10">
-
-            <h class="text-xl font-bold  text-[#473D13] md:text-3xl  text-center">
-                APPOINTMENT BOOKING FORM
+        <div class="flex  items-center justify-center mt-5">
+            <h class="text-xl font-medium  text-[#473D13] md:text-3xl  text-center">
+                APPOINTMENT
             </h>
-
         </div>
+
+        <Stepper :currentStep="currentStep" class="hidden md:block" />
 
         <div class=" flex flex-col items-center justify-center p-10 text-gray-500">
+            <div class="w-full max-w-3xl  p-7 text-center bg-white rounded-xl shadow-md hidden md:block">
+                <div v-if="currentStep === 1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+
+                        <div class="relative w-full mb-5 group">
+                            <input type="text" v-model="name" id="floating_name" placeholder=" " class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand" />
+
+                            <label for="floating_name" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           peer-placeholder-shown:scale-100
+           peer-placeholder-shown:translate-y-2
+           peer-focus:scale-75
+           peer-focus:-translate-y-4
+           peer-focus:text-brand">
+                                NAME
+                            </label>
+
+                            <p v-if="errors.name" class="text-red-600 text-sm mt-1">
+                                {{ errors.name }}
+                            </p>
+                        </div>
 
 
-            <div class="w-full max-w-3xl  p-10 text-center">
+                        <div class="relative w-full mb-5 group">
+                            <input type="text" v-model="surname" id="floating_surname" placeholder=" " class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand" />
+
+                            <label for="floating_surname" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           peer-placeholder-shown:scale-100
+           peer-placeholder-shown:translate-y-2
+           peer-focus:scale-75
+           peer-focus:-translate-y-4
+           peer-focus:text-brand">
+                                SURNAME
+                            </label>
+
+                            <p v-if="errors.surname" class="text-red-600 text-sm mt-1">
+                                {{ errors.surname }}
+                            </p>
+                        </div>
 
 
+                        <div class="relative w-full mb-5 group">
+                            <input type="date" v-model="birthDate" id="floating_birth_date" class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand" />
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                            <label for="floating_birth_date" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           pointer-events-none
+           peer-focus:text-brand">
+                                DATE OF BIRTH
+                            </label>
 
-                    <div>
-                        <label class="block mb-1 font-medium">NAME</label>
-                        <input class="w-full p-2 border rounded" v-model="name" />
-                        <p v-if="errors.name" class="text-red-600 text-sm mt-1">
-                            {{ errors.name }}
-                        </p>
+                            <p v-if="errors.birthDate" class="text-red-600 text-sm mt-1">
+                                {{ errors.birthDate }}
+                            </p>
+                        </div>
+
+                        <div class="relative w-full mb-5 group">
+                            <select v-model="gender" id="floating_gender" class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand">
+                                <option value="" disabled hidden></option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+
+                            <label for="floating_gender" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           pointer-events-none
+           peer-focus:text-brand">
+                                GENDER
+                            </label>
+
+                            <p v-if="errors.gender" class="text-red-600 text-sm mt-1">
+                                {{ errors.gender }}
+                            </p>
+                        </div>
+
+                        <div class="relative w-full mb-5 group">
+                            <select v-model="specialty" id="floating_specialty" class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand">
+                                <option value="" disabled hidden></option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="dermatology">Dermatology</option>
+                                <option value="pediatrics">Pediatrics</option>
+                            </select>
+
+                            <label for="floating_specialty" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           pointer-events-none
+           peer-focus:text-brand">
+                                SPECIALTY
+                            </label>
+
+                            <p v-if="errors.specialty" class="text-red-600 text-sm mt-1">
+                                {{ errors.specialty }}
+                            </p>
+                        </div>
+
+
+                        <div class="relative w-full mb-5 group">
+                            <input type="text" v-model="phone" id="floating_phone" placeholder=" " class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer border-gray-300 focus:border-brand" />
+
+                            <label for="floating_phone" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           peer-placeholder-shown:scale-100
+           peer-placeholder-shown:translate-y-2
+           peer-focus:scale-75
+           peer-focus:-translate-y-4
+           peer-focus:text-brand">
+                                PHONE NUMBER
+                            </label>
+
+                            <p v-if="errors.phone" class="text-red-600 text-sm mt-1">
+                                {{ errors.phone }}
+                            </p>
+                        </div>
+
+
+                        <div class="relative w-full mb-5 group">
+                            <input type="date" v-model="date" id="floating_date" class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-full
+           appearance-none focus:outline-none focus:ring-0
+           peer border-gray-300 focus:border-brand" />
+
+                            <label for="floating_date" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1 pointer-events-none
+           peer-focus:text-brand">
+                                SELECT DATE
+                            </label>
+
+                            <p v-if="errors.date" class="text-red-600 text-sm mt-1">
+                                {{ errors.date }}
+                            </p>
+                        </div>
+
+
+                        <div class="relative w-full mb-5 group">
+                            <label for="floating_time" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           pointer-events-none
+           peer-focus:text-brand">SELECT TIME</label>
+                            <select v-model="time" id="floating_time" class="block w-full px-4 py-3 text-sm bg-transparent
+                           border rounded-full
+                           appearance-none focus:outline-none focus:ring-0
+                           peer border-gray-300 focus:border-brand">
+                                >
+                                <option value="" disabled>Select time</option>
+
+  <option
+    v-for="t in availableSlots"
+    :key="t"
+    :value="t"
+  >
+    {{ t }}
+  </option>
+                            </select>
+
+                            <p v-if="errors.time" class="text-red-600 text-sm mt-1">
+                                {{ errors.time }} </p>
+                        </div>
+
+                        <div class="md:col-span-2 relative w-full mb-5 group">
+                            <textarea v-model="medicalConcern" id="floating_request" placeholder=" " rows="4" class="block w-full px-4 py-3 text-sm bg-transparent
+           border rounded-xl resize-none
+           appearance-none focus:outline-none focus:ring-0
+           peer
+           border-gray-300
+           focus:border-brand"></textarea>
+
+                            <label for="floating_request" class="absolute text-sm text-gray-500 duration-300 transform
+           -translate-y-4 scale-75 top-2 left-4 z-10
+           origin-[0] bg-white px-1
+           peer-placeholder-shown:scale-100
+           peer-placeholder-shown:translate-y-2
+           peer-focus:scale-75
+           peer-focus:-translate-y-4
+           peer-focus:text-brand">
+                                MEDICAL CONCERN OR REQUEST
+                            </label>
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block mb-1 font-medium">SURNAME</label>
-                        <input class="w-full p-2 border rounded" v-model="surname" />
-                        <p v-if="errors.surname" class="text-red-600 text-sm mt-1">
-                            {{ errors.name }}
-                        </p>
-                    </div>
-                    <div>
-                        <label class="block mb-1 font-medium">DATE OF BIRTH</label>
-                        <input type="date" class="w-full p-2 border rounded" v-model="birthDate" />
-                        <p v-if="errors.birthDate" class="text-red-600 text-sm mt-1">
-                            {{ errors.birthDate }}
-                        </p>
-                    </div>
-                    <div>
-                        <label class="block mb-1 font-medium">GENDER</label>
-                        <select class="w-full p-2 border rounded" v-model="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                        <p v-if="errors.gender" class="text-red-600 text-sm mt-1">
-                            {{ errors.gender }}
-                        </p>
+              <div class="mt-8 space-y-3">
+
+                        <button @click="goNext" class="w-full py-3 text-sm font-medium
+               bg-green-800 text-white
+               rounded-full
+               hover:bg-green-700 transition">
+                            NEXT
+                        </button>
+
+                        <NuxtLink to="/" class="block text-center text-green-800 text-sm underline">
+                            < BACK
+                        </NuxtLink>
+
                     </div>
 
+                </div>
 
 
-                    <div>
-                        <label class="block mb-1 font-medium">SPECIALTY</label>
-                        <select class="w-full p-2 border rounded" v-model="specialty">
-                            <option value="cardiology">Cardiology</option>
-                            <option value="dermatology">Dermatology</option>
-                            <option value="pediatrics">Pediatrics</option>
-                        </select>
-                        <p v-if="errors.specialty" class="text-red-600 text-sm mt-1">
-                            {{ errors.specialty }} </p>
+                <div v-if="currentStep === 2" class="text-left space-y-3">
+
+                    <h2 class="text-xl font-semibold text-center mb-4">
+                        Review Your Appointment
+                    </h2>
+
+                     <div class="bg-gray-50 rounded-xl p-4 text-md space-y-2">
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Name</span>
+                            <span>{{ name }} {{ surname }}</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Birthdate</span>
+                            <span>{{ birthDate }}</span>
+                        </div>
+
+                          <div class="flex justify-between">
+                            <span class="text-gray-500">Gender</span>
+                            <span>{{ gender }}</span>
+                        </div>
+
+                          <div class="flex justify-between">
+                            <span class="text-gray-500">Specialty</span>
+                            <span>{{ specialty }}</span>
+                        </div>
+
+                          <div class="flex justify-between">
+                            <span class="text-gray-500">Phone</span>
+                            <span>{{ phone }}</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Date</span>
+                            <span>{{ date }}</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Time</span>
+                            <span>{{ time }}</span>
+                        </div>
+
+                          <div class="flex justify-between">
+                            <span class="text-gray-500">Medical Concern</span>
+                            <span>{{ medicalConcern }}</span>
+                        </div>
+
                     </div>
 
-                    <div>
-                        <label class="block mb-1 font-medium">PHONE NUMBER</label>
-                        <input class="w-full p-2 border rounded" v-model="phone" />
-                        <p v-if="errors.phone" class="text-red-600 text-sm mt-1">
-                            {{ errors.phone }} </p>
-                    </div>
+                     <div class="space-y-3 pt-2">
 
-                    <div>
-                        <label class="block mb-1 font-medium">SELECT DATE</label>
-                        <input type="date" class="w-full p-2 border rounded" v-model="date" />
-                        <p v-if="errors.date" class="text-red-600 text-sm mt-1">
-                            {{ errors.date }} </p>
-                    </div>
+                        <button @click="submitBooking" class="w-full py-3 text-sm font-medium
+               bg-green-800 text-white
+               rounded-full hover:bg-green-700 transition">
+                            CONFIRM APPOINTMENT
+                        </button>
 
-                    <div>
-                        <label class="block mb-1 font-medium">SELECT TIME</label>
-                        <select v-model="time" class="w-full p-2 border rounded">
-                            <option value="">SELECT TIME</option>
-                            <option v-for="t in timeSlots" :key="t" :value="t">
-                                {{ t }}
-                            </option>
-                        </select>
-
-                        <p v-if="errors.time" class="text-red-600 text-sm mt-1">
-                            {{ errors.time }} </p>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block mb-1 font-medium">MEDICAL CONCERN OR REQUEST</label>
-                        <input type="text" class="w-full h-24 p-2 border rounded" v-model="medicalConcern" />
+                        <button @click="currentStep = 1" class="w-full text-sm text-green-800 underline">
+                           < EDIT 
+                        </button>
 
                     </div>
                 </div>
-                <div class="flex flex-col w-full items-center justify-center mt-6 space-y-4">
-                    <button @click="submitBooking"
-                        class="inline-block mt-6 px-6 py-3 bg-green-800 text-white rounded hover:bg-green-700">
-                        CONFIRM BOOKING
-                    </button>
-                    <NuxtLink to="/" class="text-green-800 underline  inline-block hover:text-green-600">
-                        < BACK </NuxtLink>
-                </div>
+
+
+
 
             </div>
+
+            <BookingSm />
+
+
+
+
         </div>
     </div>
+
+
+
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Navbar from './navbar.vue'
+import Stepper from './Stepper.vue'
+
+const currentStep = ref(1)
+
 
 const router = useRouter()
 
@@ -128,56 +347,9 @@ const time = ref('')
 const medicalConcern = ref('')
 const errors = ref<Record<string, string>>({})
 
-const validateForm = () => {
-    errors.value = {}
-
-    if (!name.value) errors.value.name = 'Name is required'
-    if (!surname.value) errors.value.surname = 'Surname is required'
-    if (!birthDate.value) errors.value.birthDate = 'Date of birth is required'
-    if (!gender.value) errors.value.gender = 'Gender is required'
-    if (!specialty.value) errors.value.specialty = 'Specialty is required'
-    if (!phone.value) {
-        errors.value.phone = 'Phone number is required'
-    } else if (!/^[0-9]{9,10}$/.test(phone.value)) {
-        errors.value.phone = 'Invalid phone number'
-    }
-    if (!date.value) errors.value.date = 'Appointment date is required'
-    if (!time.value) errors.value.time = 'Appointment time is required'
-
-    return Object.keys(errors.value).length === 0
-}
-
-
-
-// const submitBooking = () => {
-//     if (!validateForm()) return
-
-//     const booking = {
-//         id: Date.now(),
-//         name: name.value,
-//         surname: surname.value,
-//         birthDate: birthDate.value,
-//         gender: gender.value,
-//         specialty: specialty.value,
-//         phone: phone.value,
-//         date: date.value,
-//         time: time.value,
-//         medicalConcern: medicalConcern.value
-//     }
-
-//     const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
-//     bookings.push(booking)
-//     localStorage.setItem('bookings', JSON.stringify(bookings))
-
-//     console.log(bookings);
-
-//     router.push(`/success?bookingId=${booking.id}`)
-// }
-
 
 
 const submitBooking = async () => {
-    if (!validateForm()) return
 
     const bookingPayload = {
         name: name.value,
@@ -192,7 +364,7 @@ const submitBooking = async () => {
     }
 
     try {
-        // 👉 ส่งเข้า PostgreSQL ผ่าน Nuxt Server API
+        // PostgreSQL 
         const result = await $fetch('/api/appointments', {
             method: 'POST',
             body: bookingPayload
@@ -203,7 +375,7 @@ const submitBooking = async () => {
         localStorage.setItem('bookings', JSON.stringify(bookings))
 
         // router.push(`/success?bookingId=${result.id}`)
-        router.push(`/success?bookingNo=${result.booking_no}`)
+        router.push(`/mybooking?bookingNo=${result.booking_no}`)
     } catch (err) {
         console.error(err)
         alert('Booking failed. Please try again.')
@@ -211,18 +383,49 @@ const submitBooking = async () => {
 }
 
 
+const validateStep1 = () => {
+    errors.value = {}
+
+    if (!name.value) errors.value.name = 'Name is required'
+    if (!surname.value) errors.value.surname = 'Surname is required'
+    if (!birthDate.value) errors.value.birthDate = 'Date of birth is required'
+    if (!gender.value) errors.value.gender = 'Gender is required'
+    if (!specialty.value) errors.value.specialty = 'Specialty is required'
+    if (!phone.value) {
+        errors.value.phone = 'Phone number is required'
+    } else if (!/^[0-9]{9,10}$/.test(phone.value)) {
+        errors.value.phone = 'Invalid phone number'
+    }
+
+    return Object.keys(errors.value).length === 0
+}
+
+const goNext = () => {
+    if (!validateStep1()) return
+    currentStep.value = 2
+}
+const availableSlots = ref<string[]>([])
+
 const timeSlots = [
-    '09:00', '09:30',
-    '10:00', '10:30',
-    '11:00', '11:30',
-    '12:00', '12:30',
-    '13:00', '13:30',
-    '14:00', '14:30',
-    '15:00', '15:30',
-    '16:00', '16:30',
-    '17:00'
+  '09:00','09:30','10:00','10:30',
+  '11:00','11:30','12:00','12:30',
+  '13:00','13:30','14:00','14:30',
+  '15:00','15:30','16:00','16:30','17:00'
 ]
 
+watch(date, async (newDate) => {
+  if (!newDate) return
+
+  const bookedTimes = await $fetch('/api/available', {
+    query: { date: newDate }
+  })
+
+  availableSlots.value = timeSlots.filter(
+  t => !bookedTimes.map(b => b.slice(0,5)).includes(t)
+)
+
+    console.log("Booked from DB:", bookedTimes)
+})
 
 
 
