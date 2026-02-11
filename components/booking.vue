@@ -191,14 +191,7 @@
                            peer border-gray-300 focus:border-brand">
                                 >
                                 <option value="" disabled>Select time</option>
-
-  <option
-    v-for="t in availableSlots"
-    :key="t"
-    :value="t"
-  >
-    {{ t }}
-  </option>
+                                <option v-for="t in availableSlots" :key="t":value="t">{{ t }}</option>
                             </select>
 
                             <p v-if="errors.time" class="text-red-600 text-sm mt-1">
