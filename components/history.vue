@@ -21,7 +21,7 @@
               <th class="p-4 text-left">Name</th>
               <th class="p-4 text-left">Specialty</th>
               <th class="p-4 text-left">Date</th>
-              <th class="p-4 text-left">Time</th>
+              <th class="p-4 text-left">Time</th> 
               <th class="p-4 text-left">Phone</th>
               <th class="p-4 text-center">Action</th>
             </tr>

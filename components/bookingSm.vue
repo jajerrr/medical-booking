@@ -7,8 +7,6 @@
 
         <Stepper :currentStep="currentStep" class="block md:hidden mb-10" />
 
-
-        <!-- STEP 1 -->
         <div v-if="currentStep === 1">
 
             <div class="grid grid-cols-1 gap-5 text-left">

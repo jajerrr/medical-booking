@@ -34,7 +34,8 @@ export default defineEventHandler(async (event) => {
 
     return result.rows[0]
 
-  } catch (err: any) {
+  } 
+  catch (err: any) {
     if (err.code === '23505') {
       throw createError({
         statusCode: 400,

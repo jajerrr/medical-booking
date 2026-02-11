@@ -404,6 +404,8 @@ const goNext = () => {
     if (!validateStep1()) return
     currentStep.value = 2
 }
+
+
 const availableSlots = ref<string[]>([])
 
 const timeSlots = [
